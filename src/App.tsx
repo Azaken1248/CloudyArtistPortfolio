@@ -3,6 +3,9 @@ import {
   EnvelopeSimple,
   Image as ImageIcon,
   Palette,
+  ProhibitInset,
+  ShieldCheck,
+  Info,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { ArtworkCard } from "./components/ArtworkCard";
@@ -13,9 +16,10 @@ import {
   commissionTiers,
   faqs,
   heroImage,
+  heroPillLabel,
   navItems,
   siteName,
-  tosPoints,
+  tosSections,
 } from "./content/portfolio";
 
 function App() {
@@ -154,31 +158,51 @@ function App() {
               </div>
             </div>
 
-            <div className="relative">
-              <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.98),transparent_30%),radial-gradient(circle_at_80%_25%,rgba(220,235,255,0.98),transparent_28%),radial-gradient(circle_at_50%_70%,rgba(175,203,255,0.2),transparent_38%)] blur-2xl" />
+            <div className="relative flex items-center justify-center">
+              {/* Animated glow backdrop */}
+              <div className="hero-glow pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(175,203,255,0.55)_0%,rgba(220,235,255,0.3)_35%,transparent_65%)]" />
+              <div className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0%,transparent_50%)] blur-2xl" />
 
-              <div className="relative overflow-hidden rounded-[2.5rem] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(220,235,255,0.88))] p-5 shadow-[0_35px_90px_rgba(77,93,122,0.12)] backdrop-blur">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_28%,rgba(255,255,255,0.98),transparent_26%),radial-gradient(circle_at_70%_35%,rgba(220,235,255,0.95),transparent_22%),radial-gradient(circle_at_50%_80%,rgba(175,203,255,0.18),transparent_26%)] opacity-95" />
-                <div className="relative rounded-4xl border border-white/70 bg-white/55 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                  <div className="rounded-[1.75rem] border border-white/70 bg-white/65 p-6 shadow-[0_20px_50px_rgba(77,93,122,0.10)] backdrop-blur">
-                    <img
-                      src={heroImage}
-                      alt="Cloudy PNG tuber remake 1"
-                      className="mx-auto h-96 w-full max-w-88 object-contain sm:h-120"
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </div>
+              {/* Orbit ring */}
+              <div className="orbit-ring pointer-events-none absolute inset-4 rounded-full border border-dashed border-primary/20" />
+              <div className="orbit-ring pointer-events-none absolute inset-10 rounded-full border border-primary/10" style={{ animationDirection: "reverse", animationDuration: "28s" }} />
 
-                  <div className="mt-4 flex items-center justify-between gap-3 rounded-full bg-white/88 px-4 py-3 text-sm text-neutral/65 shadow-[0_10px_24px_rgba(77,93,122,0.08)]">
-                    <span className="flex items-center gap-2 font-medium text-neutral">
-                      <span className="h-2 w-2 rounded-full bg-primary" />
-                      Original character spotlight
-                    </span>
-                    <span className="text-xs uppercase tracking-[0.35em] text-neutral/45">
-                      Intro
-                    </span>
-                  </div>
+              {/* Floating sparkles */}
+              <svg className="sparkle-1 pointer-events-none absolute left-[8%] top-[12%] h-5 w-5 text-primary/60" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <svg className="sparkle-2 pointer-events-none absolute right-[10%] top-[18%] h-4 w-4 text-primary/50" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <svg className="sparkle-3 pointer-events-none absolute bottom-[20%] left-[5%] h-3 w-3 text-primary/40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <svg className="sparkle-4 pointer-events-none absolute right-[6%] bottom-[30%] h-2.5 w-2.5 text-primary/45" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <svg className="sparkle-5 pointer-events-none absolute left-[18%] bottom-[10%] h-3.5 w-3.5 text-primary/35" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <svg className="sparkle-6 pointer-events-none absolute right-[18%] top-[6%] h-2 w-2 text-primary/55" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+
+              {/* Character image — floating with drop shadow */}
+              <div className="hero-character relative z-10">
+                <img
+                  src={heroImage}
+                  alt="Cloudy PNGTuber character"
+                  className="mx-auto h-96 w-full max-w-80 object-contain drop-shadow-[0_20px_40px_rgba(94,106,126,0.18)] sm:h-[28rem]"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+
+              {/* Pill label — sits below the character, doesn't float */}
+              <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2">
+                <div className="flex items-center gap-2 whitespace-nowrap rounded-full border border-white/80 bg-white/85 px-5 py-2.5 text-sm shadow-[0_14px_30px_rgba(77,93,122,0.12)] backdrop-blur-xl">
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
+                  <span className="font-medium text-neutral">{heroPillLabel}</span>
                 </div>
               </div>
             </div>
@@ -193,54 +217,49 @@ function App() {
           />
 
           <div className="mt-10 space-y-6">
-            <article className="overflow-hidden rounded-[2.5rem] bg-white/45 p-4 shadow-[0_28px_70px_rgba(77,93,122,0.08)] backdrop-blur sm:p-5">
-              <div className="flex items-center justify-between gap-3 px-1 pb-4">
-                <div className="space-y-1">
-                  <p className="text-xs font-semibold uppercase tracking-[0.4em] text-primary/75">
-                    Auto-flow carousel
-                  </p>
-                  <h3 className="font-display text-2xl text-neutral sm:text-3xl">
-                    Drift through the collection
-                  </h3>
-                </div>
+            <div className="relative overflow-hidden rounded-4xl px-2 py-4">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-[linear-gradient(90deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(270deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
 
-                <p className="hidden text-sm text-neutral/60 sm:block">
-                  Hover to pause, or let it float.
-                </p>
-              </div>
-
-              <div className="relative overflow-hidden rounded-4xl bg-[linear-gradient(180deg,rgba(255,255,255,0.58),rgba(220,235,255,0.18))] px-2 py-4">
-                <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-[linear-gradient(90deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
-                <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(270deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
-
-                <div className="gallery-marquee flex w-max gap-4 hover:[animation-play-state:paused]">
-                  {showcaseItems.concat(showcaseItems).map((artwork, index) => (
-                    <article
-                      key={`${artwork.title}-${index}`}
-                      className={`group relative w-[18rem] shrink-0 overflow-hidden rounded-4xl shadow-[0_22px_50px_rgba(77,93,122,0.12)] sm:w-88 lg:w-100 ${
-                        index % 2 === 1 ? "mt-6 sm:mt-10" : ""
+              <div className="gallery-marquee flex w-max gap-4 hover:[animation-play-state:paused]">
+                {showcaseItems.concat(showcaseItems).map((artwork, index) => (
+                  <article
+                    key={`${artwork.title}-${index}`}
+                    className={`group relative w-[18rem] shrink-0 overflow-hidden rounded-4xl shadow-[0_22px_50px_rgba(77,93,122,0.12)] sm:w-88 lg:w-100 ${index % 2 === 1 ? "mt-6 sm:mt-10" : ""
                       }`}
-                    >
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.96),transparent_24%),radial-gradient(circle_at_82%_24%,rgba(175,203,255,0.16),transparent_22%),linear-gradient(180deg,transparent_42%,rgba(94,106,126,0.08))] opacity-90" />
-                      <img
-                        src={artwork.image}
-                        alt={artwork.alt}
-                        className="h-88 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-104"
-                        loading={
-                          index < showcaseItems.length ? "eager" : "lazy"
-                        }
-                        decoding="async"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent_0%,rgba(94,106,126,0.12)_100%)]" />
-                    </article>
-                  ))}
-                </div>
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.96),transparent_24%),radial-gradient(circle_at_82%_24%,rgba(175,203,255,0.16),transparent_22%),linear-gradient(180deg,transparent_42%,rgba(94,106,126,0.08))] opacity-90" />
+                    <img
+                      src={artwork.image}
+                      alt={artwork.alt}
+                      className="h-88 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-104"
+                      loading={
+                        index < showcaseItems.length ? "eager" : "lazy"
+                      }
+                      decoding="async"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent_0%,rgba(94,106,126,0.12)_100%)]" />
+                  </article>
+                ))}
               </div>
-            </article>
+            </div>
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {/* Decorative section divider */}
+            <div className="flex items-center justify-center gap-3 py-2">
+              <div className="h-px w-16 bg-[linear-gradient(90deg,transparent,rgba(175,203,255,0.5))]" />
+              <svg className="h-4 w-4 text-primary/40" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+              </svg>
+              <div className="h-px w-16 bg-[linear-gradient(270deg,transparent,rgba(175,203,255,0.5))]" />
+            </div>
+
+            {/* Uniform Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {bleedGridItems.map((artwork) => (
-                <ArtworkCard key={artwork.title} artwork={artwork} />
+                <ArtworkCard
+                  key={artwork.title}
+                  artwork={artwork}
+                />
               ))}
             </div>
           </div>
@@ -319,8 +338,8 @@ function App() {
         <section id="faq" className="scroll-mt-28 py-16 sm:py-20 lg:py-24">
           <SectionHeading
             eyebrow="FAQ & TOS"
-            title="Lorem ipsum dolor sit amet."
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            title="Questions & terms of service."
+            description="Everything you need to know before commissioning. Please read the terms carefully — commissioning me means you accept them."
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.92fr]">
@@ -349,21 +368,85 @@ function App() {
               <h3 className="font-display text-2xl text-neutral sm:text-3xl">
                 Terms of service
               </h3>
-              <p className="mt-4 text-sm leading-7 text-neutral/75">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+              {/* Decorative TOS divider */}
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-primary/40">
+                <span>· · · ·</span>
+                <span>・✦・</span>
+                <span>· · · ·</span>
+              </div>
+
+              <p className="mt-3 text-center text-sm leading-7 text-neutral/75">
+                Commissioning me means you have read and accepted the TOS.
               </p>
 
-              <ul className="mt-6 space-y-3 text-sm leading-6 text-neutral/70">
-                {tosPoints.map((point) => (
-                  <li
-                    key={point}
-                    className="rounded-[1.25rem] bg-white px-4 py-3 ring-1 ring-neutral/10"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </ul>
+              <div className="mt-5 space-y-5">
+                {tosSections.map((section) => {
+                  const isProhibited = section.variant === "prohibited";
+                  const isInfo = section.variant === "info";
+
+                  const SectionIcon = isProhibited
+                    ? ProhibitInset
+                    : isInfo
+                      ? Info
+                      : ShieldCheck;
+
+                  const headingColor = isProhibited
+                    ? "text-red-500/80"
+                    : "text-primary";
+
+                  const bgColor = isProhibited
+                    ? "bg-red-50/60"
+                    : isInfo
+                      ? "bg-blue-50/40"
+                      : "bg-secondary/25";
+
+                  const ringColor = isProhibited
+                    ? "ring-red-200/50"
+                    : "ring-neutral/10";
+
+                  return (
+                    <div
+                      key={section.heading}
+                      className={`rounded-2xl ${bgColor} p-4 ring-1 ${ringColor}`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <SectionIcon
+                          size={16}
+                          weight="fill"
+                          className={headingColor}
+                        />
+                        <h4
+                          className={`text-xs font-semibold uppercase tracking-[0.25em] ${headingColor}`}
+                        >
+                          {section.heading}
+                        </h4>
+                      </div>
+
+                      <ul className="mt-3 space-y-2">
+                        {section.points.map((point) => (
+                          <li
+                            key={point}
+                            className="flex items-start gap-2 text-[13px] leading-5 text-neutral/70"
+                          >
+                            <span
+                              className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${isProhibited ? "bg-red-400/60" : "bg-primary/50"}`}
+                            />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom TOS divider */}
+              <div className="mt-5 flex items-center justify-center gap-1.5 text-xs text-primary/40">
+                <span>· · · ·</span>
+                <span>・✦・</span>
+                <span>· · · ·</span>
+              </div>
             </article>
           </div>
         </section>
