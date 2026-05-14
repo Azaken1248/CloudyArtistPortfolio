@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+import { FadeUp, StaggerList, fadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
 import { commissionTiers } from "../content/portfolio";
 
@@ -13,8 +15,11 @@ export function CommissionSection() {
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       />
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <article className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]">
+      <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <motion.article
+          className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
+          variants={fadeUp}
+        >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
               Lorem ipsum
@@ -44,33 +49,37 @@ export function CommissionSection() {
               • Ut enim ad minim veniam, quis nostrud exercitation ullamco.
             </li>
           </ul>
-        </article>
+        </motion.article>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {commissionTiers.map((tier) => (
-            <article
-              key={tier.name}
-              className="rounded-4xl border border-neutral/10 bg-white p-6 shadow-[0_18px_40px_rgba(77,93,122,0.08)]"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-xl text-neutral sm:text-2xl">
-                  {tier.name}
-                </h3>
-                <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold text-primary">
-                  {tier.priceLabel}
-                </span>
-              </div>
+        <FadeUp>
+          <StaggerList className="grid gap-4 sm:grid-cols-2">
+            {commissionTiers.map((tier, index) => (
+              <motion.article
+                key={tier.name}
+                className="rounded-4xl border border-neutral/10 bg-white p-6 shadow-[0_18px_40px_rgba(77,93,122,0.08)]"
+                variants={fadeUp}
+                transition={{ delay: index * 0.07 }}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-xl text-neutral sm:text-2xl">
+                    {tier.name}
+                  </h3>
+                  <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold text-primary">
+                    {tier.priceLabel}
+                  </span>
+                </div>
 
-              <p className="mt-3 text-xs uppercase tracking-[0.3em] text-neutral/45">
-                {tier.detailTag}
-              </p>
-              <p className="mt-4 text-sm leading-6 text-neutral/75">
-                {tier.description}
-              </p>
-            </article>
-          ))}
-        </div>
-      </div>
+                <p className="mt-3 text-xs uppercase tracking-[0.3em] text-neutral/45">
+                  {tier.detailTag}
+                </p>
+                <p className="mt-4 text-sm leading-6 text-neutral/75">
+                  {tier.description}
+                </p>
+              </motion.article>
+            ))}
+          </StaggerList>
+        </FadeUp>
+      </StaggerList>
     </section>
   );
 }

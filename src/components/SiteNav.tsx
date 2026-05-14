@@ -6,6 +6,7 @@ import {
   Palette,
   Question,
 } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 import type { NavItem } from "../content/portfolio";
 
 type SiteNavProps = {
@@ -25,7 +26,12 @@ const navIcons: Record<NavItem["id"], NavIcon> = {
 
 export function SiteNav({ items, activeId }: SiteNavProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-secondary/70 bg-white/80 backdrop-blur-xl">
+    <motion.header
+      className="sticky top-0 z-50 border-b border-secondary/70 bg-white/80 backdrop-blur-xl"
+      initial={{ opacity: 0, y: -40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+    >
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
           <a
@@ -71,7 +77,6 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
               >
                 {(() => {
                   const Icon = navIcons[item.id];
-
                   return <Icon size={17} weight="fill" />;
                 })()}
                 {item.label}
@@ -101,7 +106,6 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center text-base">
                     {(() => {
                       const Icon = navIcons[item.id];
-
                       return <Icon size={18} weight="fill" />;
                     })()}
                   </span>
@@ -120,6 +124,6 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
           </div>
         </nav>
       </div>
-    </header>
+    </motion.header>
   );
 }

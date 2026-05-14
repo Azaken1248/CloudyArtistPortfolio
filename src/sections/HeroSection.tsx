@@ -3,36 +3,77 @@ import {
   Image as ImageIcon,
   Palette,
 } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
+import { fadeUp, scaleIn } from "../components/motion";
 import { heroImage, heroPillLabel, siteName } from "../content/portfolio";
+
+const ease = [0.25, 0.1, 0.25, 1] as const;
 
 export function HeroSection() {
   return (
     <section id="home" className="scroll-mt-28 py-10 sm:py-14 lg:py-20">
       <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+
         <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/80 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-primary shadow-[0_12px_30px_rgba(175,203,255,0.28)] backdrop-blur">
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-full border border-secondary/80 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-primary shadow-[0_12px_30px_rgba(175,203,255,0.28)] backdrop-blur"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.1, duration: 0.5, ease }}
+          >
             <Palette size={18} weight="fill" />
             Original character introduction
-          </div>
+          </motion.div>
 
           <div className="space-y-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.45em] text-neutral/45">
+            <motion.p
+              className="text-sm font-semibold uppercase tracking-[0.45em] text-neutral/45"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.18, duration: 0.5, ease }}
+            >
               {siteName}
-            </p>
-            <h1 className="max-w-3xl font-display text-[clamp(2.4rem,4.2vw,4.4rem)] font-bold leading-[0.92] tracking-[-0.03em] text-neutral">
+            </motion.p>
+            <motion.h1
+              className="max-w-3xl font-display text-[clamp(2.4rem,4.2vw,4.4rem)] font-bold leading-[0.92] tracking-[-0.03em] text-neutral"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.26, duration: 0.55, ease }}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </h1>
-            <p className="max-w-2xl text-base leading-8 text-neutral/75 sm:text-lg">
+            </motion.h1>
+            <motion.p
+              className="max-w-2xl text-base leading-8 text-neutral/75 sm:text-lg"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.34, duration: 0.5, ease }}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p className="max-w-xl border-l-2 border-primary/30 pl-4 text-sm leading-7 text-neutral/65 sm:text-base">
+            </motion.p>
+            <motion.p
+              className="max-w-xl border-l-2 border-primary/30 pl-4 text-sm leading-7 text-neutral/65 sm:text-base"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.4, duration: 0.5, ease }}
+            >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore.
-            </p>
+            </motion.p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <motion.div
+            className="flex flex-wrap gap-3"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.48, duration: 0.5, ease }}
+          >
             <a
               href="#gallery"
               className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
@@ -47,10 +88,16 @@ export function HeroSection() {
               <EnvelopeSimple size={18} weight="fill" className="mr-2" />
               Request commission
             </a>
-          </div>
+          </motion.div>
         </div>
 
-        <div className="relative flex items-center justify-center">
+        <motion.div
+          className="relative flex items-center justify-center"
+          variants={scaleIn}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.25, duration: 0.6, ease }}
+        >
           <div className="hero-glow pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(175,203,255,0.55)_0%,rgba(220,235,255,0.3)_35%,transparent_65%)]" />
           <div className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0%,transparent_50%)] blur-2xl" />
 
@@ -100,7 +147,8 @@ export function HeroSection() {
               <span className="font-medium text-neutral">{heroPillLabel}</span>
             </div>
           </div>
-        </div>
+        </motion.div>
+
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+import { FadeUp } from "./motion";
+
 type SectionHeadingProps = {
   eyebrow: string;
   title: string;
@@ -15,7 +17,7 @@ export function SectionHeading({
   const lineClass = align === "center" ? "mx-auto" : "";
 
   return (
-    <header className={`${alignClass} max-w-4xl`}>
+    <FadeUp className={`${alignClass} max-w-4xl`} as="header">
       <p className="text-xs font-semibold uppercase tracking-[0.45em] text-primary/75">
         {eyebrow}
       </p>
@@ -32,6 +34,6 @@ export function SectionHeading({
           {description}
         </p>
       ) : null}
-    </header>
+    </FadeUp>
   );
 }

@@ -1,4 +1,6 @@
 import { ArrowRight } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
+import { fadeUp, StaggerList } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
 
 const contactNotes = [
@@ -16,8 +18,11 @@ export function ContactSection() {
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       />
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
-        <article className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]">
+      <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
+        <motion.article
+          className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
+          variants={fadeUp}
+        >
           <div className="inline-flex rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
             Lorem ipsum
           </div>
@@ -40,11 +45,12 @@ export function ContactSection() {
               </div>
             ))}
           </div>
-        </article>
+        </motion.article>
 
-        <form
+        <motion.form
           className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
           onSubmit={(event) => event.preventDefault()}
+          variants={fadeUp}
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="space-y-2 text-sm font-medium text-neutral/70">
@@ -100,8 +106,8 @@ export function ContactSection() {
               Send message
             </button>
           </div>
-        </form>
-      </div>
+        </motion.form>
+      </StaggerList>
     </section>
   );
 }
