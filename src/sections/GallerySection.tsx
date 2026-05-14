@@ -1,9 +1,9 @@
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useState } from "react";
 import { FadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
-import { artworkItems } from "../content/portfolio";
+import { usePortfolio } from "../content/usePortfolio";
 
 const INITIAL_COUNT = 4;
 const PAGE_SIZE = 4;
@@ -11,15 +11,15 @@ const PAGE_SIZE = 4;
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
 export function GallerySection() {
-  const showcaseItems = artworkItems;
+  const { gallery, artworks } = usePortfolio();
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
-  const hasMore = visibleCount < showcaseItems.length;
+  const hasMore = visibleCount < artworks.length;
 
-  const visibleItems = showcaseItems.slice(0, visibleCount);
+  const visibleItems = artworks.slice(0, visibleCount);
 
   function showMore() {
-    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, showcaseItems.length));
+    setVisibleCount((prev) => Math.min(prev + PAGE_SIZE, artworks.length));
   }
 
   function showLess() {
@@ -29,9 +29,9 @@ export function GallerySection() {
   return (
     <section id="gallery" className="scroll-mt-28 py-16 sm:py-20 lg:py-24">
       <SectionHeading
-        eyebrow="Artwork gallery"
-        title="Lorem ipsum dolor sit amet."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        eyebrow={gallery.eyebrow}
+        title={gallery.title}
+        description={gallery.description}
       />
 
       <div className="mt-10 space-y-6">
@@ -41,7 +41,7 @@ export function GallerySection() {
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(270deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
 
             <div className="gallery-marquee flex w-max gap-4 hover:[animation-play-state:paused]">
-              {showcaseItems.concat(showcaseItems).map((artwork, index) => (
+              {artworks.concat(artworks).map((artwork, index) => (
                 <article
                   key={`${artwork.title}-${index}`}
                   className={`group relative w-[18rem] shrink-0 overflow-hidden rounded-4xl shadow-[0_22px_50px_rgba(77,93,122,0.12)] sm:w-88 lg:w-100 ${index % 2 === 1 ? "mt-6 sm:mt-10" : ""}`}
@@ -51,7 +51,7 @@ export function GallerySection() {
                     src={artwork.image}
                     alt={artwork.alt}
                     className="h-88 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-104"
-                    loading={index < showcaseItems.length ? "eager" : "lazy"}
+                    loading={index < artworks.length ? "eager" : "lazy"}
                     decoding="async"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent_0%,rgba(94,106,126,0.12)_100%)]" />
@@ -106,8 +106,7 @@ export function GallerySection() {
           </motion.div>
         </LayoutGroup>
 
-        {/* Show more / Show less */}
-        {showcaseItems.length > INITIAL_COUNT && (
+        {artworks.length > INITIAL_COUNT && (
           <motion.div
             className="flex items-center justify-center gap-3 pt-2"
             layout
@@ -125,14 +124,14 @@ export function GallerySection() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25, ease }}
                 >
-                  <CaretDown
+                  <CaretDownIcon
                     size={16}
                     weight="bold"
                     className="transition-transform duration-300 group-hover:translate-y-0.5"
                   />
                   Show more artwork
                   <span className="ml-1 rounded-full bg-secondary/60 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-primary/80">
-                    {showcaseItems.length - visibleCount}
+                    {artworks.length - visibleCount}
                   </span>
                 </motion.button>
               ) : (
@@ -146,7 +145,7 @@ export function GallerySection() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25, ease }}
                 >
-                  <CaretUp
+                  <CaretUpIcon
                     size={16}
                     weight="bold"
                     className="transition-transform duration-300 group-hover:-translate-y-0.5"

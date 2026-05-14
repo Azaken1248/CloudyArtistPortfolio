@@ -6,10 +6,15 @@ import { GallerySection } from "./sections/GallerySection";
 import { HeroSection } from "./sections/HeroSection";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteNav } from "./components/SiteNav";
-import { navItems } from "./content/portfolio";
+import { usePortfolio } from "./content/usePortfolio";
 
 function App() {
-  const [activeSection, setActiveSection] = useState(navItems[0].id);
+  const { nav, site } = usePortfolio();
+  const [activeSection, setActiveSection] = useState(nav[0].id);
+
+  useEffect(() => {
+    document.title = site.pageTitle;
+  }, [site.pageTitle]);
 
   useEffect(() => {
     let animationFrameId = 0;
@@ -19,9 +24,9 @@ function App() {
         document.querySelector("header")?.getBoundingClientRect().height ?? 0;
       const activationLine = headerHeight + 24;
 
-      let nextSectionId = navItems[0].id;
+      let nextSectionId = nav[0].id;
 
-      for (const item of navItems) {
+      for (const item of nav) {
         const section = document.getElementById(item.id);
 
         if (!section) {
@@ -54,18 +59,18 @@ function App() {
       window.removeEventListener("scroll", requestSectionUpdate);
       window.removeEventListener("resize", requestSectionUpdate);
     };
-  }, []);
+  }, [nav]);
 
   useEffect(() => {
     const syncActiveSectionToHash = () => {
       const nextSectionId = window.location.hash.replace(/^#/, "");
 
       if (!nextSectionId) {
-        setActiveSection(navItems[0].id);
+        setActiveSection(nav[0].id);
         return;
       }
 
-      if (navItems.some((item) => item.id === nextSectionId)) {
+      if (nav.some((item) => item.id === nextSectionId)) {
         setActiveSection(nextSectionId);
       }
     };
@@ -75,7 +80,7 @@ function App() {
 
     return () =>
       window.removeEventListener("hashchange", syncActiveSectionToHash);
-  }, []);
+  }, [nav]);
 
   return (
     <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_14%_12%,rgba(255,255,255,0.99)_0%,rgba(255,255,255,0.88)_16%,transparent_36%),radial-gradient(circle_at_82%_16%,rgba(220,235,255,0.96)_0%,transparent_26%),radial-gradient(circle_at_50%_36%,rgba(175,203,255,0.48)_0%,transparent_30%),radial-gradient(circle_at_18%_78%,rgba(248,250,255,0.96)_0%,transparent_24%),radial-gradient(circle_at_84%_82%,rgba(220,235,255,0.88)_0%,transparent_26%),linear-gradient(180deg,#eef5ff_0%,#f8faff_40%,#eaf3ff_100%)] text-neutral">
@@ -90,7 +95,7 @@ function App() {
         className="pointer-events-none fixed inset-0 z-[-5] h-full w-full opacity-55"
       />
 
-      <SiteNav items={navItems} activeId={activeSection} />
+      <SiteNav items={nav} activeId={activeSection} />
 
       <main className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <HeroSection />

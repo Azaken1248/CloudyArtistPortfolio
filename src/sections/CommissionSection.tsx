@@ -1,59 +1,58 @@
 import { motion } from "framer-motion";
 import { FadeUp, StaggerList, fadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
-import { commissionTiers } from "../content/portfolio";
+import { usePortfolio } from "../content/usePortfolio";
 
 export function CommissionSection() {
+  const { commissions } = usePortfolio();
+  const { section, featured, tiers } = commissions;
+
   return (
     <section
       id="commission"
       className="scroll-mt-28 py-16 sm:py-20 lg:py-24"
     >
       <SectionHeading
-        eyebrow="Commissions"
-        title="Lorem ipsum dolor sit amet."
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        eyebrow={section.eyebrow}
+        title={section.title}
+        description={section.description}
       />
 
-      <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <motion.article
-          className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
-          variants={fadeUp}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
-              Lorem ipsum
-            </span>
-            <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
-              Lorem ipsum dolor
-            </span>
-          </div>
+      <StaggerList
+        className={`mt-10 grid gap-6 ${featured ? "lg:grid-cols-[0.9fr_1.1fr]" : ""}`}
+      >
+        {featured && (
+          <motion.article
+            className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
+            variants={fadeUp}
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary">
+                {featured.tag}
+              </span>
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold text-primary">
+                {featured.badge}
+              </span>
+            </div>
 
-          <h3 className="mt-6 font-display text-3xl text-neutral sm:text-4xl">
-            Lorem ipsum dolor sit amet.
-          </h3>
-          <p className="mt-4 max-w-xl text-base leading-7 text-neutral/75">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+            <h3 className="mt-6 font-display text-3xl text-neutral sm:text-4xl">
+              {featured.title}
+            </h3>
+            <p className="mt-4 max-w-xl text-base leading-7 text-neutral/75">
+              {featured.description}
+            </p>
 
-          <ul className="mt-6 space-y-3 text-sm leading-6 text-neutral/70">
-            <li>
-              • Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </li>
-            <li>
-              • Sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua.
-            </li>
-            <li>
-              • Ut enim ad minim veniam, quis nostrud exercitation ullamco.
-            </li>
-          </ul>
-        </motion.article>
+            <ul className="mt-6 space-y-3 text-sm leading-6 text-neutral/70">
+              {featured.highlights.map((item) => (
+                <li key={item}>• {item}</li>
+              ))}
+            </ul>
+          </motion.article>
+        )}
 
         <FadeUp>
           <StaggerList className="grid gap-4 sm:grid-cols-2">
-            {commissionTiers.map((tier, index) => (
+            {tiers.map((tier, index) => (
               <motion.article
                 key={tier.name}
                 className="rounded-4xl border border-neutral/10 bg-white p-6 shadow-[0_18px_40px_rgba(77,93,122,0.08)]"

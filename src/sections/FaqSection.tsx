@@ -1,16 +1,18 @@
-import { Info, ProhibitInset, ShieldCheck } from "@phosphor-icons/react";
+import { InfoIcon, ProhibitInsetIcon, ShieldCheckIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { StaggerList, fadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
-import { faqs, tosSections } from "../content/portfolio";
+import { usePortfolio } from "../content/usePortfolio";
 
 export function FaqSection() {
+  const { faqPage, faqs, tosSections } = usePortfolio();
+
   return (
     <section id="faq" className="scroll-mt-28 py-16 sm:py-20 lg:py-24">
       <SectionHeading
-        eyebrow="FAQ &amp; TOS"
-        title="Questions &amp; terms of service."
-        description="Everything you need to know before commissioning. Please read the terms carefully — commissioning me means you accept them."
+        eyebrow={faqPage.section.eyebrow}
+        title={faqPage.section.title}
+        description={faqPage.section.description}
       />
 
       <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.92fr]">
@@ -19,7 +21,7 @@ export function FaqSection() {
           variants={fadeUp}
         >
           <h3 className="font-display text-2xl text-neutral sm:text-3xl">
-            Common questions
+            {faqPage.faqHeading}
           </h3>
           <StaggerList className="mt-6 space-y-5">
             {faqs.map((faq, index) => (
@@ -45,7 +47,7 @@ export function FaqSection() {
           variants={fadeUp}
         >
           <h3 className="font-display text-2xl text-neutral sm:text-3xl">
-            Terms of service
+            {faqPage.tosHeading}
           </h3>
 
           <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-primary/40">
@@ -55,7 +57,7 @@ export function FaqSection() {
           </div>
 
           <p className="mt-3 text-center text-sm leading-7 text-neutral/75">
-            Commissioning me means you have read and accepted the TOS.
+            {faqPage.tosAcceptanceText}
           </p>
 
           <StaggerList className="mt-5 space-y-5">
@@ -64,10 +66,10 @@ export function FaqSection() {
               const isInfo = section.variant === "info";
 
               const SectionIcon = isProhibited
-                ? ProhibitInset
+                ? ProhibitInsetIcon
                 : isInfo
-                  ? Info
-                  : ShieldCheck;
+                  ? InfoIcon
+                  : ShieldCheckIcon;
 
               const headingColor = isProhibited
                 ? "text-red-500/80"

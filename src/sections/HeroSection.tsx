@@ -1,15 +1,14 @@
-import {
-  EnvelopeSimple,
-  Image as ImageIcon,
-  Palette,
-} from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import { resolveIcon } from "../content/iconRegistry";
+import { usePortfolio } from "../content/usePortfolio";
 import { fadeUp, scaleIn } from "../components/motion";
-import { heroImage, heroPillLabel, siteName } from "../content/portfolio";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
 export function HeroSection() {
+  const { hero } = usePortfolio();
+  const PillIcon = resolveIcon(hero.pillIcon);
+
   return (
     <section id="home" className="scroll-mt-28 py-10 sm:py-14 lg:py-20">
       <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
@@ -22,8 +21,8 @@ export function HeroSection() {
             animate="visible"
             transition={{ delay: 0.1, duration: 0.5, ease }}
           >
-            <Palette size={18} weight="fill" />
-            Original character introduction
+            {PillIcon && <PillIcon size={18} weight="fill" />}
+            {hero.pillLabel}
           </motion.div>
 
           <div className="space-y-6">
@@ -34,7 +33,7 @@ export function HeroSection() {
               animate="visible"
               transition={{ delay: 0.18, duration: 0.5, ease }}
             >
-              {siteName}
+              {hero.eyebrow}
             </motion.p>
             <motion.h1
               className="max-w-3xl font-display text-[clamp(2.4rem,4.2vw,4.4rem)] font-bold leading-[0.92] tracking-[-0.03em] text-neutral"
@@ -43,7 +42,7 @@ export function HeroSection() {
               animate="visible"
               transition={{ delay: 0.26, duration: 0.55, ease }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              {hero.headline}
             </motion.h1>
             <motion.p
               className="max-w-2xl text-base leading-8 text-neutral/75 sm:text-lg"
@@ -52,8 +51,7 @@ export function HeroSection() {
               animate="visible"
               transition={{ delay: 0.34, duration: 0.5, ease }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {hero.body}
             </motion.p>
             <motion.p
               className="max-w-xl border-l-2 border-primary/30 pl-4 text-sm leading-7 text-neutral/65 sm:text-base"
@@ -62,8 +60,7 @@ export function HeroSection() {
               animate="visible"
               transition={{ delay: 0.4, duration: 0.5, ease }}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut labore.
+              {hero.accent}
             </motion.p>
           </div>
 
@@ -74,20 +71,25 @@ export function HeroSection() {
             animate="visible"
             transition={{ delay: 0.48, duration: 0.5, ease }}
           >
-            <a
-              href="#gallery"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              <ImageIcon size={18} weight="fill" className="mr-2" />
-              View artwork
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-neutral/15 bg-white px-5 py-3 text-sm font-semibold text-neutral transition duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-secondary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-            >
-              <EnvelopeSimple size={18} weight="fill" className="mr-2" />
-              Request commission
-            </a>
+            {hero.ctaButtons.map((cta) => {
+              const Icon = resolveIcon(cta.icon);
+              const isPrimary = cta.variant === "primary";
+
+              return (
+                <a
+                  key={cta.label}
+                  href={cta.href}
+                  className={
+                    isPrimary
+                      ? "inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                      : "inline-flex items-center justify-center rounded-full border border-neutral/15 bg-white px-5 py-3 text-sm font-semibold text-neutral transition duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-secondary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  }
+                >
+                  {Icon && <Icon size={18} weight="fill" className="mr-2" />}
+                  {cta.label}
+                </a>
+              );
+            })}
           </motion.div>
         </div>
 
@@ -133,8 +135,8 @@ export function HeroSection() {
             }}
           >
             <img
-              src={heroImage}
-              alt="Cloudy PNGTuber character"
+              src={hero.image}
+              alt={hero.imageAlt}
               className="mx-auto w-full max-w-lg object-contain"
               loading="eager"
               decoding="async"
@@ -144,7 +146,7 @@ export function HeroSection() {
           <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2">
             <div className="flex items-center gap-2 whitespace-nowrap rounded-full border border-white/80 bg-white/85 px-5 py-2.5 text-sm shadow-[0_14px_30px_rgba(77,93,122,0.12)] backdrop-blur-xl">
               <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
-              <span className="font-medium text-neutral">{heroPillLabel}</span>
+              <span className="font-medium text-neutral">{hero.statusPillLabel}</span>
             </div>
           </div>
         </motion.div>
