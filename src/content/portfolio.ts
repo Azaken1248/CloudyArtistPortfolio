@@ -1,4 +1,5 @@
 import heroImageAsset from '../assets/gallary/cloudy_pngtuber_art_2.png'
+import cloudyRemake from '../assets/gallary/cloudy_png_tuber_remake_1.png'
 import cuteWaterGirl from '../assets/gallary/cuteWaterGirl.webp'
 import fischlArt from '../assets/gallary/fischl.webp'
 import rhythmGirl from '../assets/gallary/rhythmGirlpng.png'
@@ -85,8 +86,16 @@ export const artworkItems: ArtworkItem[] = [
     title: 'Cloudy PNGTuber',
     category: 'VTuber',
     description:
-      'A PNGTuber design remake featuring the Cloudy character with expressive poses and accessories.',
+      'A PNGTuber design featuring the Cloudy character with expressive poses and accessories.',
     image: heroImageAsset,
+    alt: 'Cloudy PNGTuber character design',
+  },
+  {
+    title: 'Cloudy PNGTuber Remake',
+    category: 'VTuber',
+    description:
+      'A PNGTuber remake of the Cloudy character with refined details and updated design.',
+    image: cloudyRemake,
     alt: 'Cloudy PNGTuber character remake design',
   },
   {

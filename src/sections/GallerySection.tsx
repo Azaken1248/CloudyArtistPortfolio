@@ -4,7 +4,6 @@ import { artworkItems } from "../content/portfolio";
 
 export function GallerySection() {
   const showcaseItems = artworkItems;
-  const bleedGridItems = artworkItems.slice(1);
 
   return (
     <section id="gallery" className="scroll-mt-28 py-16 sm:py-20 lg:py-24">
@@ -49,7 +48,7 @@ export function GallerySection() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {bleedGridItems.map((artwork) => (
+          {showcaseItems.map((artwork) => (
             <ArtworkCard
               key={artwork.title}
               artwork={artwork}
