@@ -1,4 +1,4 @@
-import heroImageAsset from '../assets/gallary/cloudy_png_tuber_remake_1.png'
+import heroImageAsset from '../assets/gallary/cloudy_pngtuber_art_2.png'
 import cuteWaterGirl from '../assets/gallary/cuteWaterGirl.webp'
 import fischlArt from '../assets/gallary/fischl.webp'
 import rhythmGirl from '../assets/gallary/rhythmGirlpng.png'
@@ -237,7 +237,6 @@ export const tosSections: TosSection[] = [
   },
 ]
 
-// Keep legacy export for backwards compat but prefer tosSections
 export const tosPoints = tosSections.flatMap((s) => s.points)
 
 export const heroImage = heroImageAsset
