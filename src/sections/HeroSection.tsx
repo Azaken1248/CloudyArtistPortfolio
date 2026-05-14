@@ -51,6 +51,31 @@ export function HeroSection() {
         </div>
 
         <div className="relative flex items-center justify-center">
+          <div className="hero-glow pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(175,203,255,0.55)_0%,rgba(220,235,255,0.3)_35%,transparent_65%)]" />
+          <div className="pointer-events-none absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.7)_0%,transparent_50%)] blur-2xl" />
+
+          <div className="orbit-ring pointer-events-none absolute inset-4 rounded-full border border-dashed border-primary/20" />
+          <div className="orbit-ring pointer-events-none absolute inset-10 rounded-full border border-primary/10" style={{ animationDirection: "reverse", animationDuration: "28s" }} />
+
+          <svg className="sparkle-1 pointer-events-none absolute left-[8%] top-[12%] h-5 w-5 text-primary/60" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+          <svg className="sparkle-2 pointer-events-none absolute right-[10%] top-[18%] h-4 w-4 text-primary/50" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+          <svg className="sparkle-3 pointer-events-none absolute bottom-[20%] left-[5%] h-3 w-3 text-primary/40" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+          <svg className="sparkle-4 pointer-events-none absolute right-[6%] bottom-[30%] h-2.5 w-2.5 text-primary/45" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+          <svg className="sparkle-5 pointer-events-none absolute left-[18%] bottom-[10%] h-3.5 w-3.5 text-primary/35" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+          <svg className="sparkle-6 pointer-events-none absolute right-[18%] top-[6%] h-2 w-2 text-primary/55" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41Z" />
+          </svg>
+
           <div
             className="hero-character relative z-10 w-full"
             style={{
