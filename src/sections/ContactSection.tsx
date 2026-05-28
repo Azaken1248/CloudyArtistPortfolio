@@ -15,6 +15,8 @@ export function ContactSection() {
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}
+        align="center"
+        panelSrc="/Panel%20Full/panel-full_contact.svg"
       />
 
       <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
@@ -26,7 +28,7 @@ export function ContactSection() {
             {infoCard.tag}
           </div>
 
-          <h3 className="mt-6 font-display text-3xl text-neutral sm:text-4xl">
+          <h3 className="mt-6 font-display text-3xl text-slate-800 sm:text-4xl">
             {infoCard.title}
           </h3>
           <p className="mt-4 text-base leading-7 text-neutral/75">

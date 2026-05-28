@@ -16,6 +16,8 @@ export function CommissionSection() {
         eyebrow={section.eyebrow}
         title={section.title}
         description={section.description}
+        align="center"
+        panelSrc="/Panel%20Full/panel-full_commissions.svg"
       />
 
       <StaggerList
@@ -35,7 +37,7 @@ export function CommissionSection() {
               </span>
             </div>
 
-            <h3 className="mt-6 font-display text-3xl text-neutral sm:text-4xl">
+            <h3 className="mt-6 font-display text-3xl text-slate-800 sm:text-4xl">
               {featured.title}
             </h3>
             <p className="mt-4 max-w-xl text-base leading-7 text-neutral/75">
@@ -60,7 +62,7 @@ export function CommissionSection() {
                 transition={{ delay: index * 0.07 }}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-xl text-neutral sm:text-2xl">
+                  <h3 className="font-display text-xl text-slate-800 sm:text-2xl">
                     {tier.name}
                   </h3>
                   <span className="rounded-full bg-secondary/70 px-3 py-1 text-xs font-semibold text-primary">

@@ -13,6 +13,8 @@ export function FaqSection() {
         eyebrow={faqPage.section.eyebrow}
         title={faqPage.section.title}
         description={faqPage.section.description}
+        align="center"
+        panelSrc="/Panel%20Full/panel-full_faq-tos.svg"
       />
 
       <StaggerList className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.92fr]">
@@ -20,7 +22,7 @@ export function FaqSection() {
           className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
           variants={fadeUp}
         >
-          <h3 className="font-display text-2xl text-neutral sm:text-3xl">
+          <h3 className="font-display text-2xl text-slate-800 sm:text-3xl">
             {faqPage.faqHeading}
           </h3>
           <StaggerList className="mt-6 space-y-5">
@@ -46,7 +48,7 @@ export function FaqSection() {
           className="rounded-4xl border border-neutral/10 bg-white p-7 shadow-[0_20px_50px_rgba(77,93,122,0.08)]"
           variants={fadeUp}
         >
-          <h3 className="font-display text-2xl text-neutral sm:text-3xl">
+          <h3 className="font-display text-2xl text-slate-800 sm:text-3xl">
             {faqPage.tosHeading}
           </h3>
 

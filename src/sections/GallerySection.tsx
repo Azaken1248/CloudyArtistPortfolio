@@ -32,6 +32,8 @@ export function GallerySection() {
         eyebrow={gallery.eyebrow}
         title={gallery.title}
         description={gallery.description}
+        align="center"
+        panelSrc="/Panel%20Full/panel-full_artworks.svg"
       />
 
       <div className="mt-10 space-y-6">

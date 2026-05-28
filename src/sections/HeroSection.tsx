@@ -8,6 +8,7 @@ const ease = [0.25, 0.1, 0.25, 1] as const;
 export function HeroSection() {
   const { hero } = usePortfolio();
   const PillIcon = resolveIcon(hero.pillIcon);
+  const introPanelSrc = "/Panel%20Full/panel-full_char-intro.svg";
 
   return (
     <section id="home" className="scroll-mt-28 py-10 sm:py-14 lg:py-20">
@@ -15,19 +16,34 @@ export function HeroSection() {
 
         <div className="space-y-8">
           <motion.div
-            className="inline-flex items-center gap-2 rounded-full border border-secondary/80 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-primary shadow-[0_12px_30px_rgba(175,203,255,0.28)] backdrop-blur"
+            className="relative mx-auto w-full max-w-4xl"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             transition={{ delay: 0.1, duration: 0.5, ease }}
           >
-            {PillIcon && <PillIcon size={18} weight="fill" />}
-            {hero.pillLabel}
+            {/* Shows high-fidelity hand-drawn SVG background on all screens */}
+            <div className="relative mx-auto w-full">
+              <img
+                src={introPanelSrc}
+                alt=""
+                aria-hidden="true"
+                className="block h-auto w-full select-none"
+                loading="eager"
+                decoding="async"
+              />
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-[12%] sm:px-[16%]">
+                <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 text-[clamp(0.55rem,0.9vw,0.95rem)] font-bold uppercase tracking-[0.2em] sm:tracking-[0.36em] text-[#E06D8C]">
+                  {PillIcon && <PillIcon size={14} weight="fill" className="shrink-0 text-[#E06D8C]/90" />}
+                  <span className="leading-tight">{hero.pillLabel}</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           <div className="space-y-6">
             <motion.p
-              className="text-sm font-semibold uppercase tracking-[0.45em] text-neutral/45"
+              className="text-xs font-bold uppercase tracking-[0.45em] text-[#D26E88] opacity-90"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -36,7 +52,7 @@ export function HeroSection() {
               {hero.eyebrow}
             </motion.p>
             <motion.h1
-              className="max-w-3xl font-display text-[clamp(2.4rem,4.2vw,4.4rem)] font-bold leading-[0.92] tracking-[-0.03em] text-neutral"
+              className="max-w-3xl font-display text-[clamp(2.4rem,4.2vw,4.2rem)] font-bold leading-[1.1] tracking-normal text-slate-800"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -45,7 +61,7 @@ export function HeroSection() {
               {hero.headline}
             </motion.h1>
             <motion.p
-              className="max-w-2xl text-base leading-8 text-neutral/75 sm:text-lg"
+              className="max-w-2xl text-base leading-relaxed text-[#5E6A7E]/90 sm:text-lg"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -54,7 +70,7 @@ export function HeroSection() {
               {hero.body}
             </motion.p>
             <motion.p
-              className="max-w-xl border-l-2 border-primary/30 pl-4 text-sm leading-7 text-neutral/65 sm:text-base"
+              className="max-w-xl border-l-2 border-[#AFCBFF]/45 pl-4 text-sm leading-relaxed text-[#5E6A7E]/75 sm:text-base"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
