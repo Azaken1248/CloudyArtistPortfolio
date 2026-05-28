@@ -9,9 +9,29 @@ export function SiteFooter() {
     <FadeUp as="footer">
       <div className="border-t border-secondary/70 bg-white/80">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm text-neutral/55 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <p>{footer.copyright}</p>
             <p>{footer.tagline}</p>
+            <p className="text-[11px] text-neutral/45 mt-2">
+              Website by{" "}
+              <a
+                href="https://github.com/Azaken1248"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary/80 hover:text-primary transition-colors underline decoration-dotted decoration-2 underline-offset-2"
+              >
+                Azaken1248
+              </a>{" "}
+              • Assets by{" "}
+              <a
+                href="https://instagram.com/snowysushi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#D26E88] hover:text-[#E06D8C] transition-colors underline decoration-dotted decoration-2 underline-offset-2"
+              >
+                snowysushi
+              </a>
+            </p>
           </div>
 
           {socials.length > 0 && (

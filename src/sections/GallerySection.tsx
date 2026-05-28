@@ -38,27 +38,44 @@ export function GallerySection() {
 
       <div className="mt-10 space-y-6">
         <FadeUp>
-          <div className="relative overflow-hidden rounded-4xl px-2 py-4">
+          <div className="relative overflow-hidden rounded-4xl px-2 py-6">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-[linear-gradient(90deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-[linear-gradient(270deg,#eef5ff_0%,rgba(238,245,255,0)_100%)]" />
 
-            <div className="gallery-marquee flex w-max gap-4 hover:[animation-play-state:paused]">
-              {artworks.concat(artworks).map((artwork, index) => (
-                <article
-                  key={`${artwork.title}-${index}`}
-                  className={`group relative w-[18rem] shrink-0 overflow-hidden rounded-4xl shadow-[0_22px_50px_rgba(77,93,122,0.12)] sm:w-88 lg:w-100 ${index % 2 === 1 ? "mt-6 sm:mt-10" : ""}`}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(255,255,255,0.96),transparent_24%),radial-gradient(circle_at_82%_24%,rgba(175,203,255,0.16),transparent_22%),linear-gradient(180deg,transparent_42%,rgba(94,106,126,0.08))] opacity-90" />
-                  <img
-                    src={artwork.image}
-                    alt={artwork.alt}
-                    className="h-88 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-104"
-                    loading={index < artworks.length ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(180deg,transparent_0%,rgba(94,106,126,0.12)_100%)]" />
-                </article>
-              ))}
+            <div className="gallery-marquee flex items-start w-max gap-6 py-4 hover:[animation-play-state:paused]">
+              {artworks.concat(artworks).map((artwork, index) => {
+                const isAlternate = index % 2 === 1;
+                const rotationClass = isAlternate
+                  ? "rotate-[1.5deg] mt-6 sm:mt-10 hover:rotate-0"
+                  : "-rotate-[1.5deg] hover:rotate-0";
+
+                return (
+                  <article
+                    key={`${artwork.title}-${index}`}
+                    className={`group relative w-[16rem] sm:w-76 lg:w-84 shrink-0 rounded-[2.2rem] bg-white/90 border border-white/60 p-3 shadow-[0_16px_36px_rgba(77,93,122,0.08)] backdrop-blur-sm transition-all duration-500 ${rotationClass} hover:scale-[1.03] hover:shadow-[0_24px_50px_rgba(175,203,255,0.22)] hover:border-primary/50`}
+                  >
+                    {/* Inner Stitched Border */}
+                    <div className="absolute inset-1.5 rounded-[1.8rem] border border-dashed border-[#AFCBFF]/30 pointer-events-none" />
+
+                    {/* Decorative Washi Tape */}
+                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[rgba(235,242,252,0.7)] border-x border-[#AFCBFF]/30 backdrop-blur-sm rotate-[-2deg] opacity-80" />
+
+                    <div className="relative overflow-hidden rounded-[1.6rem] bg-secondary/10">
+                      <img
+                        src={artwork.image}
+                        alt={artwork.alt}
+                        className="h-64 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-76 lg:h-88"
+                        loading={index < artworks.length ? "eager" : "lazy"}
+                        decoding="async"
+                      />
+                    </div>
+
+                    {/* Cute floating sparkles on the card corners */}
+                    <span className="absolute bottom-4.5 right-4.5 z-10 text-[#E06D8C]/90 text-sm animate-pulse">✦</span>
+                    <span className="absolute bottom-5.5 left-4.5 z-10 text-primary/70 text-xs">✦</span>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </FadeUp>

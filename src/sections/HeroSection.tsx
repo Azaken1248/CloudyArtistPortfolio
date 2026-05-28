@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Sparkle } from "@phosphor-icons/react";
 import { resolveIcon } from "../content/iconRegistry";
 import { usePortfolio } from "../content/usePortfolio";
 import { fadeUp, scaleIn } from "../components/motion";
@@ -159,10 +160,24 @@ export function HeroSection() {
             />
           </div>
 
-          <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2">
-            <div className="flex items-center gap-2 whitespace-nowrap rounded-full border border-white/80 bg-white/85 px-5 py-2.5 text-sm shadow-[0_14px_30px_rgba(77,93,122,0.12)] backdrop-blur-xl">
-              <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
-              <span className="font-medium text-neutral">{hero.statusPillLabel}</span>
+          <div className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 translate-y-3">
+            <div className="relative flex items-center gap-2 whitespace-nowrap rounded-2xl rounded-tr-none border-2 border-[#AFCBFF]/40 bg-white/95 px-5 py-2.5 shadow-[0_12px_28px_rgba(175,203,255,0.22)] backdrop-blur-md transition-transform duration-300 hover:scale-105">
+              {/* Cute Inner Stitching Border */}
+              <div className="absolute inset-0.5 rounded-xl rounded-tr-none border border-dashed border-[#AFCBFF]/50 pointer-events-none" />
+              
+              {/* Left Decorative Sparkle */}
+              <span className="absolute -top-2.5 -left-2.5 animate-pulse text-[#E06D8C] text-xs select-none">✦</span>
+              {/* Right Decorative Sparkle */}
+              <span className="absolute -bottom-2 -right-1.5 text-primary text-[10px] select-none">✦</span>
+              
+              {/* Cute Icon */}
+              <span className="relative flex h-5 w-5 shrink-0 items-center justify-center text-[#E06D8C] animate-bounce" style={{ animationDuration: '2.5s' }}>
+                <Sparkle size={16} weight="fill" />
+              </span>
+              
+              <span className="font-display text-[13px] font-bold tracking-wide text-slate-800 relative z-10">
+                {hero.statusPillLabel}
+              </span>
             </div>
           </div>
         </motion.div>

@@ -154,10 +154,13 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		max-width: 100%;
+		overflow-x: clip;
 	}
 
 	body {
-		min-width: 320px;
+		max-width: 100%;
+		overflow-x: clip;
 		background:
 			radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.92), transparent 26%),
 			radial-gradient(circle at 82% 14%, rgba(220, 235, 255, 0.82), transparent 26%),

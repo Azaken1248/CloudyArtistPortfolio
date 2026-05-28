@@ -20,29 +20,41 @@ function App() {
     let animationFrameId = 0;
 
     const updateActiveSection = () => {
+      // Bottom of page check to highlight the last section (e.g. Contact)
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const totalPageHeight = document.documentElement.scrollHeight;
+      if (scrollPosition >= totalPageHeight - 32) {
+        setActiveSection(nav[nav.length - 1].id);
+        return;
+      }
+
+      // Find the section that occupies the most area of the viewport (excluding the header space)
+      const viewportHeight = window.innerHeight;
       const headerHeight =
         document.querySelector("header")?.getBoundingClientRect().height ?? 0;
-      const activationLine = headerHeight + 24;
 
-      let nextSectionId = nav[0].id;
+      const viewportActiveTop = headerHeight;
+      const viewportActiveBottom = viewportHeight;
+
+      let bestSectionId = nav[0].id;
+      let maxOverlap = -1;
 
       for (const item of nav) {
         const section = document.getElementById(item.id);
+        if (!section) continue;
 
-        if (!section) {
-          continue;
-        }
+        const rect = section.getBoundingClientRect();
+        const sectionTop = Math.max(rect.top, viewportActiveTop);
+        const sectionBottom = Math.min(rect.bottom, viewportActiveBottom);
+        const overlap = Math.max(0, sectionBottom - sectionTop);
 
-        const { top } = section.getBoundingClientRect();
-
-        if (top <= activationLine) {
-          nextSectionId = item.id;
-        } else {
-          break;
+        if (overlap > maxOverlap && overlap > 0) {
+          maxOverlap = overlap;
+          bestSectionId = item.id;
         }
       }
 
-      setActiveSection(nextSectionId);
+      setActiveSection(bestSectionId);
     };
 
     const requestSectionUpdate = () => {
@@ -83,7 +95,7 @@ function App() {
   }, [nav]);
 
   return (
-    <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_14%_12%,rgba(255,255,255,0.99)_0%,rgba(255,255,255,0.88)_16%,transparent_36%),radial-gradient(circle_at_82%_16%,rgba(220,235,255,0.96)_0%,transparent_26%),radial-gradient(circle_at_50%_36%,rgba(175,203,255,0.48)_0%,transparent_30%),radial-gradient(circle_at_18%_78%,rgba(248,250,255,0.96)_0%,transparent_24%),radial-gradient(circle_at_84%_82%,rgba(220,235,255,0.88)_0%,transparent_26%),linear-gradient(180deg,#eef5ff_0%,#f8faff_40%,#eaf3ff_100%)] text-neutral">
+    <div className="relative isolate min-h-screen bg-[radial-gradient(circle_at_14%_12%,rgba(255,255,255,0.99)_0%,rgba(255,255,255,0.88)_16%,transparent_36%),radial-gradient(circle_at_82%_16%,rgba(220,235,255,0.96)_0%,transparent_26%),radial-gradient(circle_at_50%_36%,rgba(175,203,255,0.48)_0%,transparent_30%),radial-gradient(circle_at_18%_78%,rgba(248,250,255,0.96)_0%,transparent_24%),radial-gradient(circle_at_84%_82%,rgba(220,235,255,0.88)_0%,transparent_26%),linear-gradient(180deg,#eef5ff_0%,#f8faff_40%,#eaf3ff_100%)] text-neutral">
       <div className="pointer-events-none fixed inset-0 -z-20 bg-[radial-gradient(circle_at_12%_14%,rgba(255,255,255,0.99)_0%,transparent_18%),radial-gradient(circle_at_82%_10%,rgba(220,235,255,0.96)_0%,transparent_22%),radial-gradient(circle_at_50%_36%,rgba(175,203,255,0.42)_0%,transparent_24%),radial-gradient(circle_at_18%_78%,rgba(248,250,255,0.92)_0%,transparent_22%),radial-gradient(circle_at_84%_82%,rgba(220,235,255,0.84)_0%,transparent_24%)] blur-3xl" />
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(180deg,rgba(255,255,255,0.95)_0%,rgba(248,250,255,0.36)_42%,rgba(255,255,255,0.94)_100%)]" />
       <div className="pointer-events-none absolute -left-20 top-32 -z-10 h-80 w-80 rounded-full bg-[rgba(220,235,255,0.92)] blur-3xl" />
