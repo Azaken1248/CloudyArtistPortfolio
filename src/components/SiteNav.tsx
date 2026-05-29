@@ -26,14 +26,14 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
             href="#home"
             className="group flex items-center gap-3 focus-visible:outline-none"
           >
-            <span className={`grid h-11 w-11 place-items-center rounded-2xl text-sm font-semibold text-neutral transition duration-300 group-hover:-translate-y-0.5 overflow-hidden ${
+            <span className={`grid h-11 w-11 place-items-center rounded-2xl text-sm font-semibold text-neutral transition duration-300 group-hover:-translate-y-0.5 ${
               site.logoIcon && isUrl(site.logoIcon)
-                ? ""
-                : "bg-primary shadow-[0_14px_30px_rgba(175,203,255,0.35)]"
+                ? "p-1"
+                : "bg-primary shadow-[0_14px_30px_rgba(175,203,255,0.35)] overflow-hidden"
             }`}>
               {site.logoIcon ? (
                 isUrl(site.logoIcon) ? (
-                  <img src={site.logoIcon} alt="" className="h-full w-full object-cover" />
+                  <img src={site.logoIcon} alt="" className="h-full w-full object-contain" />
                 ) : LogoIcon ? (
                   <LogoIcon size={20} weight="fill" />
                 ) : null
