@@ -54,8 +54,7 @@ export function ContactSection() {
       return;
     }
 
-    // Fallback to local Message Relay port if actionUrl is not configured
-    const targetUrl = form.actionUrl || "http://localhost:5001/api/messages";
+    const targetUrl = form.actionUrl || "http://cloudyrelayapi.azaken.com/api/messages";
 
     try {
       const response = await fetch(targetUrl, {
