@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { resolveIcon } from "../content/iconRegistry";
+import { resolveIcon, isUrl } from "../content/iconRegistry";
 import { fadeUp, StaggerList } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
 import { usePortfolio } from "../content/usePortfolio";
@@ -113,7 +113,13 @@ export function ContactSection() {
               type="submit"
               className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
-              {SubmitIcon && <SubmitIcon size={18} weight="fill" className="mr-2" />}
+              {form.submitIcon ? (
+                isUrl(form.submitIcon) ? (
+                  <img src={form.submitIcon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm mr-2" />
+                ) : SubmitIcon ? (
+                  <SubmitIcon size={18} weight="fill" className="mr-2" />
+                ) : null
+              ) : null}
               {form.submitLabel}
             </button>
           </div>

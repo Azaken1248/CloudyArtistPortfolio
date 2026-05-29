@@ -1,4 +1,4 @@
-import { resolveIcon } from "../content/iconRegistry";
+import { resolveIcon, isUrl } from "../content/iconRegistry";
 import { usePortfolio } from "../content/usePortfolio";
 import { FadeUp } from "./motion";
 
@@ -48,7 +48,13 @@ export function SiteFooter() {
                     title={link.label}
                     className="grid h-9 w-9 place-items-center rounded-full border border-neutral/10 bg-white text-neutral/50 transition duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:text-primary hover:shadow-[0_10px_24px_rgba(175,203,255,0.2)]"
                   >
-                    {Icon && <Icon size={18} weight="fill" />}
+                    {link.icon ? (
+                      isUrl(link.icon) ? (
+                        <img src={link.icon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm" />
+                      ) : Icon ? (
+                        <Icon size={18} weight="fill" />
+                      ) : null
+                    ) : null}
                   </a>
                 );
               })}

@@ -1,6 +1,6 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { resolveIcon } from "../content/iconRegistry";
+import { resolveIcon, isUrl } from "../content/iconRegistry";
 import type { NavItem } from "../content/types";
 import { usePortfolio } from "../content/usePortfolio";
 
@@ -26,8 +26,14 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
             href="#home"
             className="group flex items-center gap-3 focus-visible:outline-none"
           >
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 group-hover:-translate-y-0.5">
-              {LogoIcon && <LogoIcon size={20} weight="fill" />}
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-primary text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 group-hover:-translate-y-0.5 overflow-hidden">
+              {site.logoIcon ? (
+                isUrl(site.logoIcon) ? (
+                  <img src={site.logoIcon} alt="" className="h-full w-full object-cover" />
+                ) : LogoIcon ? (
+                  <LogoIcon size={20} weight="fill" />
+                ) : null
+              ) : null}
             </span>
             <span>
               <span className="block font-display text-xl text-neutral">
@@ -63,7 +69,13 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                   : "text-neutral/60 after:scale-x-0 hover:text-neutral hover:after:scale-x-100"
                   }`}
               >
-                {Icon && <Icon size={17} weight="fill" />}
+                {item.icon ? (
+                  isUrl(item.icon) ? (
+                    <img src={item.icon} alt="" className="h-[17px] w-[17px] object-contain rounded-sm" />
+                  ) : Icon ? (
+                    <Icon size={17} weight="fill" />
+                  ) : null
+                ) : null}
                 {item.label}
               </a>
             );
@@ -89,7 +101,13 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                     }`}
                 >
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center text-base">
-                    {Icon && <Icon size={18} weight="fill" />}
+                    {item.icon ? (
+                      isUrl(item.icon) ? (
+                        <img src={item.icon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm" />
+                      ) : Icon ? (
+                        <Icon size={18} weight="fill" />
+                      ) : null
+                    ) : null}
                   </span>
                   <span
                     className={`whitespace-nowrap text-sm font-semibold transition-all duration-300 ${isActive

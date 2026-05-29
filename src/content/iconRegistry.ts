@@ -113,3 +113,7 @@ export function resolveIcon(name: string | undefined): Icon | undefined {
   if (!name) return undefined
   return registry[name]
 }
+
+export function isUrl(v: string | undefined): boolean {
+  return !!v && (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('blob:'))
+}

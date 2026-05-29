@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkle } from "@phosphor-icons/react";
-import { resolveIcon } from "../content/iconRegistry";
+import { resolveIcon, isUrl } from "../content/iconRegistry";
 import { usePortfolio } from "../content/usePortfolio";
 import { fadeUp, scaleIn } from "../components/motion";
 
@@ -35,7 +35,13 @@ export function HeroSection() {
               />
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-[12%] sm:px-[16%]">
                 <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 text-[clamp(0.55rem,0.9vw,0.95rem)] font-bold uppercase tracking-[0.2em] sm:tracking-[0.36em] text-[#E06D8C]">
-                  {PillIcon && <PillIcon size={14} weight="fill" className="shrink-0 text-[#E06D8C]/90" />}
+                  {hero.pillIcon ? (
+                    isUrl(hero.pillIcon) ? (
+                      <img src={hero.pillIcon} alt="" className="h-3.5 w-3.5 object-contain rounded-sm shrink-0" />
+                    ) : PillIcon ? (
+                      <PillIcon size={14} weight="fill" className="shrink-0 text-[#E06D8C]/90" />
+                    ) : null
+                  ) : null}
                   <span className="leading-tight">{hero.pillLabel}</span>
                 </div>
               </div>
@@ -102,7 +108,13 @@ export function HeroSection() {
                       : "inline-flex items-center justify-center rounded-full border border-neutral/15 bg-white px-5 py-3 text-sm font-semibold text-neutral transition duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-secondary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   }
                 >
-                  {Icon && <Icon size={18} weight="fill" className="mr-2" />}
+                  {cta.icon ? (
+                    isUrl(cta.icon) ? (
+                      <img src={cta.icon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm mr-2" />
+                    ) : Icon ? (
+                      <Icon size={18} weight="fill" className="mr-2" />
+                    ) : null
+                  ) : null}
                   {cta.label}
                 </a>
               );
