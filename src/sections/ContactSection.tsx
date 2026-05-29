@@ -54,7 +54,7 @@ export function ContactSection() {
       return;
     }
 
-    const targetUrl = form.actionUrl || "http://cloudyrelayapi.azaken.com/api/messages";
+    const targetUrl = form.actionUrl || "https://cloudyrelayapi.azaken.com/api/messages";
 
     try {
       const response = await fetch(targetUrl, {
