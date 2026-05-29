@@ -33,6 +33,7 @@ Built with React 19 | TypeScript 6 | Tailwind CSS v4 | Vite 8 | Framer Motion 12
   - [Phase 3 -- Content Hydration & API Clients](#phase-3----content-hydration--api-clients)
   - [Phase 4 -- Styling, Typography, and Keyframe Animations](#phase-4----styling-typography-and-keyframe-animations)
   - [Phase 5 -- Production Build & Assets](#phase-5----production-build--assets)
+- [Styling & Design](#styling--design)
 - [API Reference](#api-reference)
 - [License](#license)
 
@@ -301,6 +302,26 @@ Follow this guide to build a similar client-side portfolio using headless conten
    npm run build
    ```
 2. Setup environment keys for public hosting variables.
+
+---
+
+## Styling & Design
+
+### Theme Choices & Color Palette
+
+The site features a curated, harmonious light-pastel design with an emphasis on soft tones, smooth gradients, and glassmorphic overlays. This guarantees a cozy, welcoming presentation for the artist's brand without visually overwhelming the actual portfolio artwork.
+
+The color design tokens implemented inside `src/index.css` include:
+*   **Primary Accent (`#AFCBFF`):** A soft, calming pastel blue used for principal interactive boundaries, CTA button backgrounds, navigation hover states, and active text focus states.
+*   **Secondary Tint (`#DCEBFF`):** A lighter sky-blue backdrop tone used to shade panel dividers, form input borders, card backgrounds, and outer structural rings.
+*   **Slate Neutral (`#5E6A7E`):** A dark slate gray that acts as the primary typography and icon color. It provides comfortable, high-contrast readability against light pastel backdrops without the harshness of pure black or dark grays.
+*   **Warm Accent (`#D26E88` / `#E06D8C`):** Soft rose-pink highlights used for status pills (e.g. commission availability indicators), special detail tags, and keyframe-driven background sparkles.
+
+### Asset & Icon Credits
+
+All hand-drawn vector section divider panel SVGs (`panel-full_char-intro.svg`, `panel-full_contact.svg`, etc.) and visual brand illustrations featured throughout this project are created by illustrator **snowysushi**.
+*   **Instagram Portfolio:** [instagram.com/snowysushi](https://instagram.com/snowysushi)
+*   **Usage License:** Assets are used under direct permission; all rights remain reserved to the artist.
 
 ---
 
