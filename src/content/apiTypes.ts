@@ -35,9 +35,10 @@ export type ApiCommissionFeatured = {
 export type ApiFormField = {
   name: string
   label: string
-  type: 'text' | 'email' | 'textarea'
+  type: 'text' | 'email' | 'textarea' | 'select'
   placeholder: string
   rows?: number
+  options?: string[]
 }
 
 export type ApiContactContent = {

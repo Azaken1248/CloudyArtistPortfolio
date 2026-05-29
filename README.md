@@ -20,6 +20,7 @@ Built with React 19 | TypeScript 6 | Tailwind CSS v4 | Vite 8 | Framer Motion 12
   - [Data Hydration Layer](#data-hydration-layer)
   - [Dynamic Section Tracking](#dynamic-section-tracking)
   - [Headless CMS Integration](#headless-cms-integration)
+  - [Contact Message Relay](#contact-message-relay)
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -136,6 +137,38 @@ The preview bridge works as follows:
 - When the parent posts draft updates via `window.postMessage`, the script intercepts the payload and caches it.
 - When the application calls `fetchPortfolio()`, the intercepted fetch handler resolves immediately with the cached draft configuration instead of requesting it from the backend API.
 - This allows real-time UI updates to be visible without saving or publishing to the database.
+
+---
+
+### Contact Message Relay
+
+The portfolio contact section bypasses the CMS database for user communication. Instead, submissions are routed directly to a standalone message relay server.
+
+```mermaid
+sequenceDiagram
+    participant User as Website Visitor
+    participant Portfolio as ContactSection (React)
+    participant Relay as Message Relay API (Port 5001)
+    participant Discord as Discord DM / Channel
+    participant Email as Artist Email Inbox
+
+    User->>Portfolio: Fills form & clicks Submit
+    Note over Portfolio: Evaluates inputs & requires<br/>at least one contact channel
+    Portfolio->>Relay: HTTP POST /api/messages (JSON)
+    
+    par Discord Dispatch
+        Relay->>Discord: Relays message via Discord Bot Client
+        Note over Discord: Renders ANSI-colored code block & message
+    and Email Forwarding
+        Relay->>Email: Relays message via Nodemailer SMTP (Gmail)
+        Note over Email: Renders customized responsive HTML cards
+    end
+    
+    Relay-->>Portfolio: HTTP 200 OK (Success response)
+    Portfolio-->>User: Displays success toast and resets form
+```
+
+The relay server ensures the artist receives instant notifications over Discord DMs and Gmail. If one channel experiences temporary issues, the other remains as a fallback.
 
 ---
 

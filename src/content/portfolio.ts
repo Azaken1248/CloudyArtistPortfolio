@@ -273,14 +273,16 @@ export const defaultPortfolio: PortfolioData = {
     },
     form: {
       fields: [
-        { name: 'name', label: 'Name', type: 'text', placeholder: 'Lorem ipsum dolor sit amet' },
-        { name: 'email', label: 'Email', type: 'email', placeholder: 'Lorem ipsum dolor sit amet' },
-        { name: 'subject', label: 'Subject', type: 'text', placeholder: 'Lorem ipsum dolor sit amet' },
-        { name: 'message', label: 'Message', type: 'textarea', placeholder: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', rows: 6 },
+        { name: 'name', label: 'Name', type: 'text', placeholder: 'Your Name' },
+        { name: 'email', label: 'Email Address', type: 'email', placeholder: 'your.email@example.com' },
+        { name: 'discordId', label: 'Discord ID', type: 'text', placeholder: 'e.g. username' },
+        { name: 'preferredContact', label: 'Preferred Contact Method', type: 'select', placeholder: 'Select...', options: ['Either', 'Email', 'Discord'] },
+        { name: 'subject', label: 'Subject', type: 'text', placeholder: 'Subject of inquiry' },
+        { name: 'message', label: 'Message', type: 'textarea', placeholder: 'Describe your request...', rows: 6 },
       ],
       submitLabel: 'Send message',
       submitIcon: 'ArrowRight',
-      disclaimer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      disclaimer: 'Please provide at least one contact method (email or Discord) so the artist can reply to you.',
     },
   },
 

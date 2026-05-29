@@ -130,6 +130,7 @@ export function mapApiToPortfolio(
           type: f.type,
           placeholder: f.placeholder,
           ...(f.rows !== undefined ? { rows: f.rows } : {}),
+          ...(f.options !== undefined ? { options: f.options } : {}),
         })),
         submitLabel: raw.contactContent.form.submitLabel,
         submitIcon: raw.contactContent.form.submitIcon,
