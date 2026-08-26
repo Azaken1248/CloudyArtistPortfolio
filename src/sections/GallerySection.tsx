@@ -1,6 +1,11 @@
-import { CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react";
+import {
+  CaretDownIcon,
+  CaretUpIcon,
+  MagnifyingGlassPlusIcon,
+} from "@phosphor-icons/react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { useState } from "react";
+import { ArtworkLightbox } from "../components/ArtworkLightbox";
 import { FadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
 import { usePortfolio } from "../content/usePortfolio";
@@ -13,6 +18,7 @@ const ease = [0.25, 0.1, 0.25, 1] as const;
 export function GallerySection() {
   const { gallery, artworks } = usePortfolio();
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const hasMore = visibleCount < artworks.length;
 
@@ -44,6 +50,10 @@ export function GallerySection() {
 
             <div className="gallery-marquee flex items-start w-max gap-6 py-4 hover:[animation-play-state:paused]">
               {artworks.concat(artworks).map((artwork, index) => {
+                // The track renders the list twice for a seamless loop; the
+                // second pass is decorative, so keep it out of the tab order.
+                const artworkIndex = index % artworks.length;
+                const isDuplicate = index >= artworks.length;
                 const isAlternate = index % 2 === 1;
                 const rotationClass = isAlternate
                   ? "rotate-[1.5deg] mt-6 sm:mt-10 hover:rotate-0"
@@ -60,7 +70,14 @@ export function GallerySection() {
                     {/* Decorative Washi Tape */}
                     <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-16 h-4 bg-[rgba(235,242,252,0.7)] border-x border-[#AFCBFF]/30 backdrop-blur-sm rotate-[-2deg] opacity-80" />
 
-                    <div className="relative overflow-hidden rounded-[1.6rem] bg-secondary/10">
+                    <button
+                      type="button"
+                      onClick={() => setLightboxIndex(artworkIndex)}
+                      aria-label={`View ${artwork.title} larger`}
+                      aria-hidden={isDuplicate || undefined}
+                      tabIndex={isDuplicate ? -1 : undefined}
+                      className="relative block w-full cursor-zoom-in overflow-hidden rounded-[1.6rem] bg-secondary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                    >
                       <img
                         src={artwork.image}
                         alt={artwork.alt}
@@ -68,7 +85,8 @@ export function GallerySection() {
                         loading={index < artworks.length ? "eager" : "lazy"}
                         decoding="async"
                       />
-                    </div>
+                      <ExpandHint />
+                    </button>
 
                     {/* Cute floating sparkles on the card corners */}
                     <span className="absolute bottom-4.5 right-4.5 z-10 text-[#E06D8C]/90 text-sm animate-pulse">✦</span>
@@ -110,7 +128,12 @@ export function GallerySection() {
                     layout: { duration: 0.35, ease },
                   }}
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-secondary/20">
+                  <button
+                    type="button"
+                    onClick={() => setLightboxIndex(index)}
+                    aria-label={`View ${artwork.title} larger`}
+                    className="relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden rounded-[2rem] bg-secondary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  >
                     <img
                       src={artwork.image}
                       alt={artwork.alt}
@@ -118,7 +141,8 @@ export function GallerySection() {
                       loading="lazy"
                       decoding="async"
                     />
-                  </div>
+                    <ExpandHint />
+                  </button>
                 </motion.article>
               ))}
             </AnimatePresence>
@@ -176,6 +200,24 @@ export function GallerySection() {
           </motion.div>
         )}
       </div>
+
+      <ArtworkLightbox
+        artworks={artworks}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+      />
     </section>
+  );
+}
+
+/** Soft "click to enlarge" affordance revealed on hover/focus of an artwork. */
+function ExpandHint() {
+  return (
+    <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[linear-gradient(180deg,rgba(72,90,124,0)_45%,rgba(72,90,124,0.28)_100%)] opacity-0 transition duration-500 group-hover:opacity-100 group-focus-within:opacity-100">
+      <span className="inline-flex h-10 w-10 translate-y-2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-neutral/70 shadow-[0_10px_24px_rgba(77,93,122,0.18)] backdrop-blur-sm transition duration-500 group-hover:translate-y-0 group-focus-within:translate-y-0">
+        <MagnifyingGlassPlusIcon size={18} weight="bold" />
+      </span>
+    </span>
   );
 }
