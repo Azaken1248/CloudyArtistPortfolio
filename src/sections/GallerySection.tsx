@@ -8,7 +8,7 @@ import { useState } from "react";
 import { ArtworkLightbox } from "../components/ArtworkLightbox";
 import { FadeUp } from "../components/motion";
 import { SectionHeading } from "../components/SectionHeading";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 
 const INITIAL_COUNT = 4;
 const PAGE_SIZE = 4;
@@ -82,7 +82,10 @@ export function GallerySection() {
                         src={artwork.image}
                         alt={artwork.alt}
                         className="h-64 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-76 lg:h-88"
-                        loading={index < artworks.length ? "eager" : "lazy"}
+                        // Only the first two are on screen at load; the
+                        // marquee scrolls the rest in, and the duplicate pass
+                        // is off-screen entirely.
+                        loading={index < 2 ? "eager" : "lazy"}
                         decoding="async"
                       />
                       <ExpandHint />

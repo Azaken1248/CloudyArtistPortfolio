@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { fadeUp } from "./motion";
+import { fadeUp } from "./motionVariants";
 import type { ArtworkItem } from "../content/types";
 
 type ArtworkCardProps = {

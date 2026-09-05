@@ -2,6 +2,19 @@
 <html lang="en">
 
 <head>
+    <!--
+      Fonts are linked here rather than @import-ed from CSS. An @import inside a
+      stylesheet cannot start until that stylesheet has downloaded and parsed,
+      which serialises HTML -> CSS -> Google Fonts CSS -> font files. Linking
+      them alongside a preconnect lets the browser open the connection and fetch
+      the CSS in parallel with our own.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    />
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Sparkle } from "@phosphor-icons/react";
-import { resolveIcon, isUrl } from "../content/iconRegistry";
-import { usePortfolio } from "../content/usePortfolio";
-import { fadeUp, scaleIn } from "../components/motion";
+import { safeHref } from "../content/iconRegistry";
+import { DynamicIcon } from "../components/DynamicIcon";
+import { usePortfolio } from '../content/portfolioContext'
+import { fadeUp, scaleIn } from "../components/motionVariants";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
 export function HeroSection() {
   const { hero } = usePortfolio();
-  const PillIcon = resolveIcon(hero.pillIcon);
   const introPanelSrc = "/Panel%20Full/panel-full_char-intro.svg";
 
   return (
@@ -35,13 +35,7 @@ export function HeroSection() {
               />
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-[12%] sm:px-[16%]">
                 <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 text-[clamp(0.55rem,0.9vw,0.95rem)] font-bold uppercase tracking-[0.2em] sm:tracking-[0.36em] text-[#E06D8C]">
-                  {hero.pillIcon ? (
-                    isUrl(hero.pillIcon) ? (
-                      <img src={hero.pillIcon} alt="" className="h-3.5 w-3.5 object-contain rounded-sm shrink-0" />
-                    ) : PillIcon ? (
-                      <PillIcon size={14} weight="fill" className="shrink-0 text-[#E06D8C]/90" />
-                    ) : null
-                  ) : null}
+                  <DynamicIcon name={hero.pillIcon} size={14} className="shrink-0 rounded-sm text-[#E06D8C]/90" />
                   <span className="leading-tight">{hero.pillLabel}</span>
                 </div>
               </div>
@@ -94,27 +88,21 @@ export function HeroSection() {
             animate="visible"
             transition={{ delay: 0.48, duration: 0.5, ease }}
           >
-            {hero.ctaButtons.map((cta) => {
-              const Icon = resolveIcon(cta.icon);
+            {hero.ctaButtons.map((cta, index) => {
               const isPrimary = cta.variant === "primary";
 
               return (
                 <a
-                  key={cta.label}
-                  href={cta.href}
+                  // Labels are CMS text and can repeat; index keeps keys unique.
+                  key={`${cta.label}-${index}`}
+                  href={safeHref(cta.href)}
                   className={
                     isPrimary
                       ? "inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                       : "inline-flex items-center justify-center rounded-full border border-neutral/15 bg-white px-5 py-3 text-sm font-semibold text-neutral transition duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:bg-secondary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   }
                 >
-                  {cta.icon ? (
-                    isUrl(cta.icon) ? (
-                      <img src={cta.icon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm mr-2" />
-                    ) : Icon ? (
-                      <Icon size={18} weight="fill" className="mr-2" />
-                    ) : null
-                  ) : null}
+                  <DynamicIcon name={cta.icon} size={18} className="mr-2 rounded-sm" />
                   {cta.label}
                 </a>
               );
@@ -168,6 +156,9 @@ export function HeroSection() {
               alt={hero.imageAlt}
               className="mx-auto w-full max-w-lg object-contain"
               loading="eager"
+              // The largest element in the initial viewport, so it is the one
+              // worth fetching ahead of everything else.
+              fetchPriority="high"
               decoding="async"
             />
           </div>

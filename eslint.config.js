@@ -18,5 +18,20 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // Fast Refresh ergonomics rather than correctness. Pairing a provider with
+      // its hook, or a component with its motion variants, is idiomatic React;
+      // allowConstantExport covers the variants, and the remaining cases are
+      // reported as warnings so they stay visible without failing the build.
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    },
+  },
+  {
+    // Test setup and specs are not shipped and are not Fast Refresh boundaries.
+    files: ['**/*.test.{ts,tsx}', 'src/test/**'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
   },
 ])

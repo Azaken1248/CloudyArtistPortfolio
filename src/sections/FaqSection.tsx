@@ -1,8 +1,9 @@
 import { InfoIcon, ProhibitInsetIcon, ShieldCheckIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { StaggerList, fadeUp } from "../components/motion";
+import { StaggerList } from "../components/motion";
+import { fadeUp } from "../components/motionVariants";
 import { SectionHeading } from "../components/SectionHeading";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 
 export function FaqSection() {
   const { faqPage, faqs, tosSections } = usePortfolio();

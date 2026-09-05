@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { FadeUp, StaggerList, fadeUp } from "../components/motion";
+import { FadeUp, StaggerList } from "../components/motion";
+import { fadeUp } from "../components/motionVariants";
 import { SectionHeading } from "../components/SectionHeading";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 
 export function CommissionSection() {
   const { commissions } = usePortfolio();

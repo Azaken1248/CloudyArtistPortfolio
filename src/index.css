@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Fonts are linked from index.html so they are not blocked behind this file. */
 @import "tailwindcss";
 
 @layer utilities {

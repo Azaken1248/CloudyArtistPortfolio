@@ -6,7 +6,7 @@ import { GallerySection } from "./sections/GallerySection";
 import { HeroSection } from "./sections/HeroSection";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteNav } from "./components/SiteNav";
-import { usePortfolio } from "./content/usePortfolio";
+import { usePortfolio } from './content/portfolioContext'
 
 function App() {
   const { nav, site } = usePortfolio();

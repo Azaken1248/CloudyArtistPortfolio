@@ -172,6 +172,47 @@ The relay server ensures the artist receives instant notifications over Discord 
 
 ---
 
+## Configuration
+
+Both backend URLs are overridable, so the site can run against a local stack
+instead of production. Copy `.env.example` to `.env.local` (git-ignored):
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `VITE_API_BASE_URL` | `https://cloudyadminapi.azaken.com/api` | Admin API the site hydrates from |
+| `VITE_RELAY_URL` | `https://cloudyrelayapi.azaken.com/api/messages` | Contact-form relay endpoint |
+
+If the API is unreachable or returns an incomplete payload, the site falls back
+to the bundled content in `src/content/portfolio.ts` and logs a warning naming
+the missing section — it never renders a broken page.
+
+## Testing
+
+```bash
+npm test          # vitest + jsdom, 21 tests
+npm run lint
+```
+
+Covers the API-to-view adapter (including which failures fall back and which are
+reported), icon and link safety (`safeHref` neutralises `javascript:` URLs saved
+through the CMS), and a regression suite for the contact form across all four
+relay response shapes — object-shaped errors, string errors, nested success
+messages, and non-JSON gateway responses.
+
+## Local development against the full stack
+
+`../dev-env.sh` at the repository root runs MongoDB, the Admin API and the
+message relay on localhost with all outbound credentials blanked:
+
+```bash
+./dev-env.sh start
+cd CloudyArtistPortfolio
+VITE_API_BASE_URL=http://localhost:5055/api npm run dev -- --port 5202
+```
+
+Port 5202 is in the API's development `ALLOWED_ORIGINS`; another port will be
+refused by CORS and the site will silently use its bundled fallback content.
+
 ## Technology Stack
 
 | Category | Technology | Version | Purpose |

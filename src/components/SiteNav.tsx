@@ -1,8 +1,9 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
-import { resolveIcon, isUrl } from "../content/iconRegistry";
+import { isUrl } from "../content/iconRegistry";
+import { DynamicIcon } from "./DynamicIcon";
 import type { NavItem } from "../content/types";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 
 type SiteNavProps = {
   items: NavItem[];
@@ -11,7 +12,6 @@ type SiteNavProps = {
 
 export function SiteNav({ items, activeId }: SiteNavProps) {
   const { site } = usePortfolio();
-  const LogoIcon = resolveIcon(site.logoIcon);
 
   return (
     <motion.header
@@ -31,13 +31,7 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                 ? "p-1"
                 : "bg-primary shadow-[0_14px_30px_rgba(175,203,255,0.35)] overflow-hidden"
             }`}>
-              {site.logoIcon ? (
-                isUrl(site.logoIcon) ? (
-                  <img src={site.logoIcon} alt="" className="h-full w-full object-contain" />
-                ) : LogoIcon ? (
-                  <LogoIcon size={20} weight="fill" />
-                ) : null
-              ) : null}
+              <DynamicIcon name={site.logoIcon} size={20} className="h-full w-full object-contain" />
             </span>
             <span>
               <span className="block font-display text-xl text-neutral">
@@ -61,7 +55,6 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
         <nav className="mt-3 hidden items-center justify-center gap-2 rounded-full bg-secondary/45 p-1 ring-1 ring-neutral/10 md:flex">
           {items.map((item) => {
             const isActive = item.id === activeId;
-            const Icon = resolveIcon(item.icon);
 
             return (
               <a
@@ -73,13 +66,7 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                   : "text-neutral/60 after:scale-x-0 hover:text-neutral hover:after:scale-x-100"
                   }`}
               >
-                {item.icon ? (
-                  isUrl(item.icon) ? (
-                    <img src={item.icon} alt="" className="h-[17px] w-[17px] object-contain rounded-sm" />
-                  ) : Icon ? (
-                    <Icon size={17} weight="fill" />
-                  ) : null
-                ) : null}
+                <DynamicIcon name={item.icon} size={17} className="rounded-sm" />
                 {item.label}
               </a>
             );
@@ -90,7 +77,6 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
           <div className="-mx-4 flex items-stretch overflow-x-auto border-y border-secondary/70 bg-white/95 scrollbar-none backdrop-blur sm:-mx-6">
             {items.map((item) => {
               const isActive = item.id === activeId;
-              const Icon = resolveIcon(item.icon);
 
               return (
                 <a
@@ -105,13 +91,7 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
                     }`}
                 >
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center text-base">
-                    {item.icon ? (
-                      isUrl(item.icon) ? (
-                        <img src={item.icon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm" />
-                      ) : Icon ? (
-                        <Icon size={18} weight="fill" />
-                      ) : null
-                    ) : null}
+                    <DynamicIcon name={item.icon} size={18} className="rounded-sm" />
                   </span>
                   <span
                     className={`whitespace-nowrap text-sm font-semibold transition-all duration-300 ${isActive

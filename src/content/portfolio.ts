@@ -1,9 +1,12 @@
-import heroImageAsset from '../assets/gallary/cloudy_pngtuber_art_2.png'
-import cloudyRemake from '../assets/gallary/cloudy_png_tuber_remake_1.png'
-import cuteWaterGirl from '../assets/gallary/cuteWaterGirl.webp'
-import fischlArt from '../assets/gallary/fischl.webp'
-import rhythmGirl from '../assets/gallary/rhythmGirlpng.png'
-import vampireArt from '../assets/gallary/Vampire.png'
+// Gallery art is imported from src/assets/optimized — web-sized WebP generated
+// by `npm run optimize:images`. The originals in src/assets are print-resolution
+// masters (up to 7 MB each) and are deliberately not bundled.
+import heroImageAsset from '../assets/optimized/cloudy_pngtuber_art_2.webp'
+import cloudyRemake from '../assets/optimized/cloudy_png_tuber_remake_1.webp'
+import cuteWaterGirl from '../assets/optimized/cuteWaterGirl.webp'
+import fischlArt from '../assets/optimized/fischl.webp'
+import rhythmGirl from '../assets/optimized/rhythmGirlpng.webp'
+import vampireArt from '../assets/optimized/Vampire.webp'
 
 import type { PortfolioData } from './types'
 

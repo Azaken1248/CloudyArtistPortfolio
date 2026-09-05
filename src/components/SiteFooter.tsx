@@ -1,5 +1,5 @@
 import { resolveIcon, isUrl } from "../content/iconRegistry";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 import { FadeUp } from "./motion";
 
 export function SiteFooter() {

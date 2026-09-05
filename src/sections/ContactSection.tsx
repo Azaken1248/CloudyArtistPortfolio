@@ -1,18 +1,39 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { resolveIcon, isUrl } from "../content/iconRegistry";
-import { fadeUp, StaggerList } from "../components/motion";
+import { DynamicIcon } from "../components/DynamicIcon";
+import { StaggerList } from "../components/motion";
+import { fadeUp } from "../components/motionVariants";
 import { SectionHeading } from "../components/SectionHeading";
-import { usePortfolio } from "../content/usePortfolio";
+import { usePortfolio } from '../content/portfolioContext'
 
 type SubmitStatus = "idle" | "sending" | "success" | "error";
+
+const SEND_FAILED_MESSAGE = "Failed to send message. Please try again later.";
+
+/** Overridable for local development; see VITE_RELAY_URL in .env.example. */
+const DEFAULT_RELAY_URL =
+  (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_RELAY_URL ??
+  "https://cloudyrelayapi.azaken.com/api/messages";
+
+/**
+ * The relay is inconsistent about error shape: its error handler returns
+ * `error: { message }` while the rate limiter returns `error: "..."`. Coerce
+ * whatever arrives into a string so an object can never reach JSX.
+ */
+function extractMessage(value: unknown, fallback: string): string {
+  if (typeof value === "string" && value.trim()) return value;
+
+  if (value && typeof value === "object") {
+    const message = (value as { message?: unknown }).message;
+    if (typeof message === "string" && message.trim()) return message;
+  }
+
+  return fallback;
+}
 
 export function ContactSection() {
   const { contact } = usePortfolio();
   const { section, infoCard, form } = contact;
-  const SubmitIcon = resolveIcon(form.submitIcon);
-  const CheckIcon = resolveIcon("Check");
-  const WarningIcon = resolveIcon("Warning");
 
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [statusMessage, setStatusMessage] = useState("");
@@ -54,7 +75,7 @@ export function ContactSection() {
       return;
     }
 
-    const targetUrl = form.actionUrl || "https://cloudyrelayapi.azaken.com/api/messages";
+    const targetUrl = form.actionUrl || DEFAULT_RELAY_URL;
 
     try {
       const response = await fetch(targetUrl, {
@@ -65,16 +86,30 @@ export function ContactSection() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      // A gateway error can return HTML rather than JSON, so parsing may fail.
+      let result: unknown = null;
+      try {
+        result = await response.json();
+      } catch {
+        result = null;
+      }
 
-      if (response.ok && result.success) {
+      const payload = (result ?? {}) as {
+        success?: boolean;
+        data?: { message?: unknown };
+        error?: unknown;
+      };
+
+      if (response.ok && payload.success) {
         setStatus("success");
-        setStatusMessage(result.message || "Your message has been sent successfully!");
+        setStatusMessage(
+          extractMessage(payload.data?.message, "Your message has been sent successfully!"),
+        );
         formElement.reset();
         setPreferredContact("Either");
       } else {
         setStatus("error");
-        setStatusMessage(result.error || "Failed to send message. Please try again later.");
+        setStatusMessage(extractMessage(payload.error, SEND_FAILED_MESSAGE));
       }
     } catch (err) {
       console.error("Error submitting contact form:", err);
@@ -216,14 +251,14 @@ export function ContactSection() {
           {/* Status Message Banners */}
           {status === "success" && (
             <div className="mt-4 flex items-start gap-3 rounded-2xl border border-emerald-200/50 bg-emerald-50 p-4 text-sm text-emerald-800">
-              {CheckIcon && <CheckIcon size={18} className="mt-0.5 shrink-0 text-emerald-600" />}
+              <DynamicIcon name="Check" size={18} className="mt-0.5 shrink-0 text-emerald-600" />
               <span>{statusMessage}</span>
             </div>
           )}
 
           {status === "error" && (
             <div className="mt-4 flex items-start gap-3 rounded-2xl border border-rose-200/50 bg-rose-50 p-4 text-sm text-rose-800">
-              {WarningIcon && <WarningIcon size={18} className="mt-0.5 shrink-0 text-rose-600" />}
+              <DynamicIcon name="Warning" size={18} className="mt-0.5 shrink-0 text-rose-600" />
               <span>{statusMessage}</span>
             </div>
           )}
@@ -247,13 +282,7 @@ export function ContactSection() {
                 </>
               ) : (
                 <>
-                  {form.submitIcon ? (
-                    isUrl(form.submitIcon) ? (
-                      <img src={form.submitIcon} alt="" className="h-[18px] w-[18px] object-contain rounded-sm mr-2" />
-                    ) : SubmitIcon ? (
-                      <SubmitIcon size={18} weight="fill" className="mr-2" />
-                    ) : null
-                  ) : null}
+                  <DynamicIcon name={form.submitIcon} size={18} className="mr-2 rounded-sm" />
                   {form.submitLabel}
                 </>
               )}

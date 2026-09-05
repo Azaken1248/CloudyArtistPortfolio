@@ -114,6 +114,32 @@ export function resolveIcon(name: string | undefined): Icon | undefined {
   return registry[name]
 }
 
+/**
+ * True for values renderable as an <img src>.
+ *
+ * Plain `http://` is excluded: the site is served over HTTPS, so an http image
+ * is blocked as mixed content and renders as a broken icon. Rejecting it here
+ * falls back to the named-icon path instead.
+ */
 export function isUrl(v: string | undefined): boolean {
-  return !!v && (v.startsWith('http://') || v.startsWith('https://') || v.startsWith('blob:'))
+  return !!v && (v.startsWith('https://') || v.startsWith('data:image/') || v.startsWith('blob:'))
+}
+
+const SAFE_LINK_SCHEMES = ['http:', 'https:', 'mailto:']
+
+/**
+ * CTA hrefs come from the CMS. An in-page anchor is fine; anything else must be
+ * a known scheme, so a `javascript:` URL saved into the CMS cannot execute for
+ * visitors who click it.
+ */
+export function safeHref(href: string | undefined): string {
+  if (!href) return '#'
+  if (href.startsWith('#') || href.startsWith('/')) return href
+
+  try {
+    const url = new URL(href, window.location.origin)
+    return SAFE_LINK_SCHEMES.includes(url.protocol) ? href : '#'
+  } catch {
+    return '#'
+  }
 }
