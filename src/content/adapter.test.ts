@@ -76,3 +76,19 @@ describe('defaultPortfolio fallback', () => {
     expect(defaultPortfolio.contact.form.fields.length).toBeGreaterThan(0)
   })
 })
+
+describe('navLinks', () => {
+  it('maps header links through', () => {
+    const p = validPayload() as unknown as Record<string, unknown>
+    p.navLinks = [{ label: 'Instagram', url: 'https://instagram.com/', icon: 'InstagramLogo' }]
+    const out = mapApiToPortfolio(p as never)
+    expect(out.navLinks).toHaveLength(1)
+    expect(out.navLinks[0].label).toBe('Instagram')
+  })
+
+  it('defaults to empty for a portfolio saved before header links existed', () => {
+    const p = validPayload() as unknown as Record<string, unknown>
+    delete p.navLinks
+    expect(mapApiToPortfolio(p as never).navLinks).toEqual([])
+  })
+})

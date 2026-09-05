@@ -143,6 +143,7 @@ export type ApiPortfolioResponse = {
     }
     nav: ApiNavItem[]
     socials: ApiSocialLink[]
+    navLinks?: { label: string; url: string; icon: string }[]
     artworks: ApiArtwork[]
     commissionTiers: ApiCommissionTier[]
     faqItems: ApiFaqItem[]

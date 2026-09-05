@@ -4,6 +4,15 @@ import { isUrl } from "../content/iconRegistry";
 import { DynamicIcon } from "./DynamicIcon";
 import type { NavItem } from "../content/types";
 import { usePortfolio } from '../content/portfolioContext'
+import { safeHref } from "../content/iconRegistry";
+
+/**
+ * The header row has a fixed budget: logo on one side, contact call to action
+ * on the other. Past a handful of links they crowd the logo at tablet widths,
+ * so the list is capped here as well as in the API schema — a portfolio saved
+ * with more (or by a future schema change) still renders a sane header.
+ */
+const MAX_NAV_LINKS = 5;
 
 type SiteNavProps = {
   items: NavItem[];
@@ -11,7 +20,8 @@ type SiteNavProps = {
 };
 
 export function SiteNav({ items, activeId }: SiteNavProps) {
-  const { site } = usePortfolio();
+  const { site, navLinks: allNavLinks } = usePortfolio();
+  const navLinks = allNavLinks.slice(0, MAX_NAV_LINKS);
 
   return (
     <motion.header
@@ -43,13 +53,41 @@ export function SiteNav({ items, activeId }: SiteNavProps) {
             </span>
           </a>
 
-          <a
-            href="#contact"
-            className="hidden items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:inline-flex"
-          >
-            <EnvelopeSimpleIcon size={18} weight="fill" />
-            Send message
-          </a>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {navLinks.length > 0 && (
+              <ul className="flex items-center gap-1 sm:gap-1.5">
+                {navLinks.map((link) => (
+                  <li key={`${link.label}-${link.url}`}>
+                    <a
+                      href={safeHref(link.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      // Icon-only: the label is the accessible name and the
+                      // tooltip, which keeps the row narrow enough to survive
+                      // alongside the logo on small screens.
+                      aria-label={link.label}
+                      title={link.label}
+                      className="grid h-9 w-9 place-items-center rounded-full border border-neutral/10 bg-white/70 text-neutral/70 transition duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-secondary/45 hover:text-neutral focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:h-10 sm:w-10"
+                    >
+                      <DynamicIcon name={link.icon} size={17} className="rounded-sm" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {navLinks.length > 0 && (
+              <span className="hidden h-6 w-px bg-neutral/10 md:block" aria-hidden="true" />
+            )}
+
+            <a
+              href="#contact"
+              className="hidden items-center justify-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-neutral shadow-[0_14px_30px_rgba(175,203,255,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white md:inline-flex"
+            >
+              <EnvelopeSimpleIcon size={18} weight="fill" />
+              Send message
+            </a>
+          </div>
         </div>
 
         <nav className="mt-3 hidden items-center justify-center gap-2 rounded-full bg-secondary/45 p-1 ring-1 ring-neutral/10 md:flex">

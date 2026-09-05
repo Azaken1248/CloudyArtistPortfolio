@@ -74,6 +74,14 @@ export function mapApiToPortfolio(
       icon: item.icon,
     })),
 
+    // Absent on portfolios saved before header links existed, so default to
+    // empty rather than treating it as a malformed payload.
+    navLinks: (raw.navLinks ?? []).map((l) => ({
+      label: l.label,
+      url: l.url,
+      icon: l.icon,
+    })),
+
     socials: (raw.socials ?? []).map((s) => ({
       platform: s.platform,
       url: s.url,

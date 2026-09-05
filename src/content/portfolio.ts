@@ -21,6 +21,13 @@ export const defaultPortfolio: PortfolioData = {
   },
 
   // ── Social links ─────────────────────────────────────
+  // Shown in the header beside the contact button; capped at 5 by the API.
+  navLinks: [
+    { label: 'Instagram', url: 'https://instagram.com/', icon: 'InstagramLogo' },
+    { label: 'TikTok', url: 'https://tiktok.com/', icon: 'TiktokLogo' },
+    { label: 'Discord', url: 'https://discord.gg/', icon: 'DiscordLogo' },
+  ],
+
   socials: [
     { platform: 'instagram', url: 'https://instagram.com/', label: 'Instagram', icon: 'InstagramLogo' },
     { platform: 'tiktok', url: 'https://tiktok.com/', label: 'TikTok', icon: 'TiktokLogo' },

@@ -6,6 +6,13 @@ export type SiteConfig = {
   logoIcon: string
 }
 
+/** Quick-access link shown in the header, beside the contact call to action. */
+export type NavLink = {
+  label: string
+  url: string
+  icon: string
+}
+
 export type SocialLink = {
   platform: string
   url: string
@@ -134,4 +141,5 @@ export type PortfolioData = {
   contact: ContactContent
   footer: FooterContent
   socials: SocialLink[]
+  navLinks: NavLink[]
 }
